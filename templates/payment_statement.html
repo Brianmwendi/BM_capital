@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Payment Statement for {{ tenant.name }}</h2>
+
+<ul>
+    {% for payment in payments %}
+    <li>Payment: ${{ payment }}</li>
+    {% endfor %}
+</ul>
+
+<a href="{{ url_for('tenants_page') }}">Back to Tenants List</a>
+
+{% endblock %}
