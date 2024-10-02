@@ -1,0 +1,40 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*.so
+
+# C extensions
+*.pyd
+
+# Virtual environment
+env/
+venv/
+bm_capital_env/
+
+# Flask specific
+instance/
+*.log
+*.pot
+*.pyc
+
+# Pytest
+.cache/
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+noxfile_config.json
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+
+# Jupyter Notebook files
+.ipynb_checkpoints
+
+# macOS specific
+.DS_Store
+
+# VSCode specific
+.vscode/
