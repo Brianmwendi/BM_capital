@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Add New Tenant</h2>
+
+<form action="{{ url_for('add_tenant') }}" method="POST">
+    <label for="name">Tenant Name</label>
+    <input type="text" id="name" name="name" required>
+
+    <label for="houses_rented">Number of Houses Rented</label>
+    <input type="number" id="houses_rented" name="houses_rented" required>
+
+    <label for="amount_paid">Amount Paid</label>
+    <input type="number" id="amount_paid" name="amount_paid" step="0.01" required>
+
+    <input type="submit" value="Add Tenant">
+</form>
+
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Tenant List</h2>
+<a href="{{ url_for('add_tenant') }}" class="add-btn">+</a> <!-- Add button -->
+
+<table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>No. of Houses Rented</th>
+            <th>Amount Paid</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for tenant in tenants %}
+        <tr>
+            <td>{{ tenant.name }}</td>
+            <td><a href="{{ url_for('rented_properties', tenant_id=tenant.id) }}">{{ tenant.houses_rented }}</a></td>
+            <td><a href="{{ url_for('payment_statement', tenant_id=tenant.id) }}">${{ tenant.amount_paid }}</a></td>
+            <td>
+                <a href="{{ url_for('delete_tenant', tenant_id=tenant.id) }}" class="delete-btn">-</a> <!-- Delete button -->
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}
