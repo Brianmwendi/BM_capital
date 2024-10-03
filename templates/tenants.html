@@ -19,20 +19,32 @@
             <th>Action</th>
         </tr>
     </thead>
-    <tbody>
-        {% for tenant in tenants %}
-        <tr>
-            <td>{{ tenant.name }}</td>
-            <td><a href="{{ url_for('rented_properties', tenant_id=tenant.id) }}">{{ tenant.houses_rented }}</a></td>
-            <td><a href="{{ url_for('payment_statement', tenant_id=tenant.id) }}">${{ tenant.amount_paid }}</a></td>
-            <td>
-                <a href="{{ url_for('delete_tenant', tenant_id=tenant.id) }}" class="delete-btn">-</a> <!-- Delete button -->
-                <a href="{{ url_for('add_tenant') }}" class="add-btn">+</a> <!-- Add button -->
+<!-- Update to make tenant names clickable -->
+<tbody>
+    {% for tenant in tenants %}
+    <tr>
+        <td>
+            <a href="{{ url_for('edit_tenant', tenant_id=tenant.id) }}">
+                {{ tenant.name }}
+            </a>
+        </td>
+        <td>
+            <a href="{{ url_for('rented_properties', tenant_id=tenant.id) }}">
+                {{ tenant.houses_rented }}
+            </a>
+        </td>
+        <td>
+            <a href="{{ url_for('payment_statement', tenant_id=tenant.id) }}">
+                ${{ tenant.amount_paid }}
+            </a>
+        </td>
+        <td>
+            <a href="{{ url_for('delete_tenant', tenant_id=tenant.id) }}" class="delete-btn">-</a>
+        </td>
+    </tr>
+    {% endfor %}
+</tbody>
 
-            </td>
-        </tr>
-        {% endfor %}
-    </tbody>
 </table>
 <!-- Print Button -->
 <button onclick="window.print()" class="print-btn">Print Tenant List</button>

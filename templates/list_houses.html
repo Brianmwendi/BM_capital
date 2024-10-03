@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Houses in {{ prop.address }}</h2>
+
+<table>
+    <thead>
+        <tr>
+            <th>House Number</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for house in houses %}
+        <tr>
+            <td>{{ house.house_number }}</td>
+            <td>{{ 'Rented' if house.rented else 'Available' }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<a href="{{ url_for('properties_page') }}">Back to Properties List</a>
+{% endblock %}

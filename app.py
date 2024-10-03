@@ -16,7 +16,12 @@ properties = [
     {"id": 2, "address": "456 Oak Ave", "houses": 2, "tenant": "Jane Smith"},
     {"id": 3, "address": "789 Maple Rd", "houses": 1, "tenant": "Mike Johnson"}
 ]
-
+# Sample data: List of houses for each property
+property_houses = {
+    1: [{"house_number": 1, "rented": True}, {"house_number": 2, "rented": True}, {"house_number": 3, "rented": False}],
+    2: [{"house_number": 1, "rented": False}, {"house_number": 2, "rented": True}],
+    3: [{"house_number": 1, "rented": True}],
+}
 # Home Page
 @app.route('/')
 def home():
@@ -38,9 +43,22 @@ def tenants_page():
     return render_template('tenants.html', tenants=filtered_tenants)
 
 
+# Route to display list of houses in a property
+@app.route('/list_houses/<int:property_id>')
+def list_houses(property_id):
+    prop = next((p for p in properties if p['id'] == property_id), None)
+    houses = property_houses.get(property_id, [])
+    return render_template('list_houses.html', prop=prop, houses=houses)
+
 # Properties page route
 @app.route('/properties', methods=['GET'])
 def properties_page():
+    search_query = request.args.get('search')  # Get search query from URL query string
+    if search_query:
+        filtered_properties = [prop for prop in properties if search_query.lower() in prop['address'].lower()]
+    else:
+        filtered_properties = properties  # Show all properties if no search query
+    
     return render_template('properties.html', properties=properties)
 
 # Add new property route
@@ -81,6 +99,35 @@ def add_tenant():
         flash(f'Tenant {name} added successfully!')
         return redirect(url_for('tenants_page'))
     return render_template('add_tenant.html')
+
+# Route to edit tenant details
+@app.route('/edit_tenant/<int:tenant_id>', methods=['GET', 'POST'])
+def edit_tenant(tenant_id):
+    tenant = next((t for t in tenants if t["id"] == tenant_id), None)
+    
+    if request.method == 'POST':
+        tenant['name'] = request.form['name']
+        tenant['houses_rented'] = int(request.form['houses_rented'])
+        tenant['amount_paid'] = float(request.form['amount_paid'])
+        flash(f'Tenant "{tenant["name"]}" updated successfully!', 'success')
+        return redirect(url_for('tenants_page'))
+
+    return render_template('edit_tenant.html', tenant=tenant)
+
+# Route to edit property details
+@app.route('/edit_property/<int:property_id>', methods=['GET', 'POST'])
+def edit_property(property_id):
+    prop = next((p for p in properties if p['id'] == property_id), None)
+    
+    if request.method == 'POST':
+        prop['address'] = request.form['address']
+        prop['houses'] = int(request.form['houses'])
+        prop['tenant'] = request.form['tenant']
+        flash(f'Property at "{prop["address"]}" updated successfully!', 'success')
+        return redirect(url_for('properties_page'))
+
+    return render_template('edit_property.html', prop=prop)
+
 
 # Delete Tenant
 @app.route('/delete_tenant/<int:tenant_id>')
