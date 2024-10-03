@@ -2,7 +2,11 @@
 
 {% block content %}
 <h2>Properties List</h2>
-
+<!-- Search Bar -->
+<form action="{{ url_for('properties_page') }}" method="get">
+    <input type="text" name="search" placeholder="Search property by address..." value="{{ request.args.get('search', '') }}">
+    <button type="submit">Search</button>
+</form>
 <!-- Add New Property Form -->
 <form action="{{ url_for('add_property') }}" method="post" class="add-property-form">
     <input type="text" name="address" placeholder="Property Address" required>
@@ -10,11 +14,7 @@
     <input type="text" name="tenant" placeholder="Tenant Occupying" required>
     <button type="submit" class="add-btn">+ Add Property</button>
 </form>
-<!-- Search Bar -->
-<form action="{{ url_for('properties_page') }}" method="get">
-    <input type="text" name="search" placeholder="Search property by address..." value="{{ request.args.get('search', '') }}">
-    <button type="submit">Search</button>
-</form>
+
 
 <!-- Properties Table -->
 <table>

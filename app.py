@@ -59,7 +59,7 @@ def properties_page():
     else:
         filtered_properties = properties  # Show all properties if no search query
     
-    return render_template('properties.html', properties=properties)
+    return render_template('properties.html', properties=filtered_properties)
 
 # Add new property route
 @app.route('/add_property', methods=['POST'])
