@@ -43,19 +43,63 @@ footer {
     border-radius: 5px;
 }
 
+/* Search bar styles */
+form input[type="text"] {
+    padding: 8px;
+    width: 250px;
+    margin-right: 10px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+}
+
+form button {
+    padding: 8px 15px;
+    background-color: #35424a;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+form button:hover {
+    background-color: #3e4f58;
+}
+
+/* Print button styles */
+.print-btn {
+    padding: 8px 15px;
+    background-color: green;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-bottom: 20px;
+}
+
+.print-btn:hover {
+    background-color: darkgreen;
+}
+
+/* Table styling */
 table {
     width: 100%;
     border-collapse: collapse;
+    margin-top: 20px;
 }
 
 table, th, td {
-    border: 1px solid black;
-    padding: 10px;
+    border: 1px solid #ddd;
+}
+
+th, td {
+    padding: 12px;
+    text-align: left;
 }
 
 th {
     background-color: #f2f2f2;
 }
+
 
 a {
     color: blue;
@@ -117,4 +161,64 @@ nav a:hover {
 
 .header-add-btn:hover {
     background-color: darkgreen;
+}
+/* Add New Property Form */
+.add-property-form {
+    margin: 20px 0;
+}
+
+.add-property-form input[type="text"],
+.add-property-form input[type="number"] {
+    padding: 8px;
+    margin-right: 10px;
+    width: 200px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+}
+
+.add-btn {
+    padding: 8px 15px;
+    background-color: green;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.add-btn:hover {
+    background-color: darkgreen;
+}
+
+/* Delete button */
+.delete-btn {
+    padding: 5px 10px;
+    background-color: red;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.delete-btn:hover {
+    background-color: darkred;
+}
+
+/* Properties Table */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+table, th, td {
+    border: 1px solid #ddd;
+}
+
+th, td {
+    padding: 12px;
+    text-align: left;
+}
+
+th {
+    background-color: #f2f2f2;
 }
