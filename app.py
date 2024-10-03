@@ -22,6 +22,10 @@ properties = [
 def home():
     return render_template('index.html')
 
+@app.route('/about')
+def about_page():
+    return render_template('about.html')
+
 # Route to display tenants, with search functionality
 @app.route('/tenants', methods=['GET'])
 def tenants_page():

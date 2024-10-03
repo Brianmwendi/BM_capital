@@ -222,3 +222,36 @@ th, td {
 th {
     background-color: #f2f2f2;
 }
+/* About page styles */
+.company-info, .company-history, .company-values {
+    margin-bottom: 20px;
+    padding: 10px;
+}
+
+h2 {
+    color: #35424a;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+h3 {
+    color: #3e4f58;
+    margin-bottom: 10px;
+}
+
+.company-info p, .company-history p {
+    font-size: 1.1em;
+    line-height: 1.6;
+}
+
+ul {
+    margin-left: 20px;
+}
+
+ul li {
+    margin-bottom: 10px;
+}
+
+strong {
+    color: #35424a;
+}
