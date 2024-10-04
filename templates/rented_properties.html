@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Rented Properties for {{ tenant.name }}</h2>
+
+<ul>
+    {% for property in properties %}
+    <li>{{ property }}</li>
+    {% endfor %}
+</ul>
+
+<a href="{{ url_for('tenants_page') }}">Back to Tenants List</a>
+
+{% endblock %}

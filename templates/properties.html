@@ -1,14 +1,56 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h2>Rented Properties for {{ tenant.name }}</h2>
+<h2>Properties List</h2>
+<!-- Search Bar -->
+<form action="{{ url_for('properties_page') }}" method="get">
+    <input type="text" name="search" placeholder="Search property by address..." value="{{ request.args.get('search', '') }}">
+    <button type="submit">Search</button>
+</form>
+<!-- Add New Property Form -->
+<form action="{{ url_for('add_property') }}" method="post" class="add-property-form">
+    <input type="text" name="address" placeholder="Property Address" required>
+    <input type="number" name="houses" placeholder="Number of Houses" required min="1">
+    <input type="text" name="tenant" placeholder="Tenant Occupying" required>
+    <button type="submit" class="add-btn">+ Add Property</button>
+</form>
 
-<ul>
+
+<!-- Properties Table -->
+<table>
+    <thead>
+        <tr>
+            <th>Address</th>
+            <th>Number of Houses</th>
+            <th>Tenant</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+ <!-- Update to make property names clickable -->
+<tbody>
     {% for property in properties %}
-    <li>{{ property }}</li>
+    <tr>
+        <td>
+            <a href="{{ url_for('edit_property', property_id=property.id) }}">
+                {{ property.address }}
+            </a>
+        </td>
+        <td>
+            <a href="{{ url_for('list_houses', property_id=property.id) }}">
+                {{ property.houses }}
+            </a>
+        </td>
+        <td>{{ property.tenant }}</td>
+        <td>
+            <a href="{{ url_for('delete_property', property_id=property.id) }}" class="delete-btn">-</a>
+        </td>
+    </tr>
     {% endfor %}
-</ul>
+</tbody>
 
-<a href="{{ url_for('tenants_page') }}">Back to Tenants List</a>
+</table>
+
+<!-- Print Button -->
+<button onclick="window.print()" class="print-btn">Print Property List</button>
 
 {% endblock %}

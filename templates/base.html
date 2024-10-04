@@ -12,32 +12,34 @@
         <nav>
             <a href="/">Home</a>
             <a href="/tenants">Tenants</a>
+            <a href="/properties">Properties</a>
             <a href="/about">About</a>
-            <a href="/contact">Contact</a>
-
         </nav>
     </header>
 
+
     <!-- Flash Messages -->
-    <div class="container">
-        {% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
-                <div class="flash-messages">
-                    {% for category, message in messages %}
-                        <div class="alert alert-{{ category }}">
-                            {{ message }}
-                        </div>
-                    {% endfor %}
-                </div>
-            {% endif %}
-        {% endwith %}
-    </div>
-    
+<div class="container">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div class="flash-messages">
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+</div>
+
     <main>
         {% block content %}{% endblock %}
     </main>
     <footer>
         <p>&copy; 2024 BM_Capital</p>
+        <p>BM_capital@gmail.com</p>
+        <p>0702000000</p>
     </footer>
 </body>
 </html>
