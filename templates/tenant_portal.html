@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Welcome, {{ tenant.username }} (Tenant)</h2>
+
+<h3>Your Rented Properties:</h3>
+<ul>
+    {% for prop in properties %}
+    <li>{{ prop.address }}</li>
+    {% endfor %}
+</ul>
+
+<a href="{{ url_for('logout') }}">Logout</a>
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Welcome, {{ owner.username }} (Owner)</h2>
+
+<h3>Your Properties:</h3>
+<ul>
+    {% for prop in properties %}
+    <li>{{ prop.address }} - {{ 'Rented by ' ~ prop.tenant if prop.tenant else 'Available' }}</li>
+    {% endfor %}
+</ul>
+
+<a href="{{ url_for('logout') }}">Logout</a>
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Welcome, {{ session.username }} (Admin)</h2>
+
+<h3>Manage Tenants:</h3>
+<ul>
+    {% for tenant in tenants %}
+    <li>{{ tenant.name }} - <a href="{{ url_for('edit_tenant', tenant_id=tenant.id) }}">Edit</a></li>
+    {% endfor %}
+</ul>
+
+<h3>Manage Properties:</h3>
+<ul>
+    {% for prop in properties %}
+    <li>{{ prop.address }} - <a href="{{ url_for('edit_property', property_id=prop.id) }}">Edit</a></li>
+    {% endfor %}
+</ul>
+
+<h3>Manage Property Owners:</h3>
+
+
+<a href="{{ url_for('logout') }}">Logout</a>
+{% endblock %}

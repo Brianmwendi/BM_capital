@@ -1,7 +1,54 @@
-from flask import Flask, render_template, request, redirect, url_for, flash
+from flask import Flask, render_template, request, redirect, url_for, flash, session
 
 app = Flask(__name__)
 app.secret_key = 'bm_capital_secret_key'
+
+from functools import wraps
+
+def login_required(role=None):
+    def wrapper(fn):
+        @wraps(fn)
+        def decorated_view(*args, **kwargs):
+            if 'user_id' not in session:
+                return redirect(url_for('login'))
+            if role and session.get('role') != role:
+                return redirect(url_for('login'))
+            return fn(*args, **kwargs)
+        return decorated_view
+    return wrapper
+
+# Sample Users with roles
+users = [
+    {"id": 1, "username": "admin", "password": "admin123", "role": "admin"},
+    {"id": 2, "username": "owner1", "password": "ownerpass", "role": "owner"},
+    {"id": 3, "username": "tenant1", "password": "tenantpass", "role": "tenant"}
+]
+# Current logged-in user (for demo purposes)
+current_user = None
+
+# Login Route
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        user = next((u for u in users if u['username'] == username and u['password'] == password), None)
+
+        if user:
+            session['user_id'] = user['id']
+            session['role'] = user['role']
+            session['username'] = user['username']
+
+            if user['role'] == 'admin':
+                return redirect(url_for('admin_portal'))
+            elif user['role'] == 'owner':
+                return redirect(url_for('owner_portal'))
+            elif user['role'] == 'tenant':
+                return redirect(url_for('tenant_portal'))
+        else:
+            flash('Invalid username or password', 'error')
+
+    return render_template('login.html')
 
 # Temporary storage for tenants (will eventually use a database)
 tenants = [
@@ -30,6 +77,30 @@ def home():
 @app.route('/about')
 def about_page():
     return render_template('about.html')
+
+@app.route('/tenant_portal')
+@login_required(role='tenant')
+def tenant_portal():
+    tenant = next((u for u in users if u['id'] == session['user_id']), None)
+    tenant_properties = [p for p in properties if p['tenant'] == tenant['username']]  # Filter tenant's properties
+    return render_template('tenant_portal.html', tenant=tenant, properties=tenant_properties)
+
+@app.route('/admin_portal')
+@login_required(role='admin')
+def admin_portal():
+    return render_template('admin_portal.html', tenants=tenants, properties=properties, owners=users)
+
+@app.route('/owner_portal')
+@login_required(role='owner')
+def owner_portal():
+    owner = next((u for u in users if u['id'] == session['user_id']), None)
+    owner_properties = [p for p in properties if p['owner'] == owner['username']]
+    return render_template('owner_portal.html', owner=owner, properties=owner_properties)
+
+@app.route('/logout')
+def logout():
+    session.clear()
+    return redirect(url_for('login'))
 
 # Route to display tenants, with search functionality
 @app.route('/tenants', methods=['GET'])
